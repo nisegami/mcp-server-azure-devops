@@ -14,3 +14,4 @@ export {
   createAuthClient,
 } from './auth-factory';
 export { AzureDevOpsClient } from './client-factory';
+export { getAuthorizationHeader } from './auth-header';

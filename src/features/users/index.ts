@@ -33,12 +33,12 @@ export const isUsersRequest: RequestIdentifier = (
  * Handles users feature requests
  */
 export const handleUsersRequest: RequestHandler = async (
-  connection: WebApi,
+  _connection: WebApi,
   request: CallToolRequest,
 ): Promise<{ content: Array<{ type: string; text: string }> }> => {
   switch (request.params.name) {
     case 'get_me': {
-      const result = await getMe(connection);
+      const result = await getMe();
       return {
         content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
       };
