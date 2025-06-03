@@ -44,3 +44,27 @@ export const CreateTimeLogSchema = z.object({
     .string()
     .describe('A comment or description of the work performed'),
 });
+
+/**
+ * Schema for reading time log entries
+ */
+export const ReadTimeLogSchema = z.object({
+  dateFrom: z
+    .string()
+    .optional()
+    .describe('Start date for filtering time logs in YYYY-MM-DD format'),
+  dateTo: z
+    .string()
+    .optional()
+    .describe('End date for filtering time logs in YYYY-MM-DD format'),
+  dateWeek: z
+    .string()
+    .optional()
+    .describe(
+      'Filter time logs by a specific ISO week in YYYY-Www format (e.g., 2025-W22)',
+    ),
+  workItemIds: z
+    .array(z.number())
+    .optional()
+    .describe('Array of work item IDs to filter time logs by'),
+});

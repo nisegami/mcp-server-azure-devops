@@ -10,6 +10,16 @@ export interface CreateTimeLogOptions {
 }
 
 /**
+ * Options for reading time log entries
+ */
+export interface ReadTimeLogOptions {
+  dateFrom?: string;
+  dateTo?: string;
+  dateWeek?: string;
+  workItemIds?: number[];
+}
+
+/**
  * Time log entry response
  */
 export interface TimeLogEntry {
@@ -22,4 +32,12 @@ export interface TimeLogEntry {
   workItemId: number;
   type: string;
   comment: string;
+}
+
+/**
+ * API response from time logs endpoint
+ */
+export interface TimeLogApiResponse {
+  count: number;
+  value: TimeLogEntry[];
 }

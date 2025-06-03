@@ -4,6 +4,7 @@ export * from './types';
 
 // Re-export features
 export * from './create-time-log';
+export * from './read-time-logs';
 
 // Export tool definitions
 export * from './tool-definitions';
@@ -15,7 +16,12 @@ import {
   RequestIdentifier,
   RequestHandler,
 } from '../../shared/types/request-handler';
-import { CreateTimeLogSchema, createTimeLog } from './';
+import {
+  CreateTimeLogSchema,
+  ReadTimeLogSchema,
+  createTimeLog,
+  readTimeLogs,
+} from './';
 
 /**
  * Checks if the request is for the time logs feature
@@ -24,7 +30,7 @@ export const isTimeLogsRequest: RequestIdentifier = (
   request: CallToolRequest,
 ): boolean => {
   const toolName = request.params.name;
-  return ['create_time_log'].includes(toolName);
+  return ['create_time_log', 'read_time_logs'].includes(toolName);
 };
 
 /**
@@ -43,6 +49,18 @@ export const handleTimeLogsRequest: RequestHandler = async (
         workItemId: args.workItemId,
         type: args.type,
         comment: args.comment,
+      });
+      return {
+        content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+      };
+    }
+    case 'read_time_logs': {
+      const args = ReadTimeLogSchema.parse(request.params.arguments);
+      const result = await readTimeLogs(connection, {
+        dateFrom: args.dateFrom,
+        dateTo: args.dateTo,
+        dateWeek: args.dateWeek,
+        workItemIds: args.workItemIds,
       });
       return {
         content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
