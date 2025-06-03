@@ -20,7 +20,7 @@ export function getOrgNameFromUrl(url?: string): string {
     const fallbackMatch = url.match(/https?:\/\/[^/]+\/([^/]+)/);
     return fallbackMatch ? fallbackMatch[1] : 'unknown-organization';
   }
-  return 'unknown-organization';
+  return 'SSS Projects';
 }
 
 /**
