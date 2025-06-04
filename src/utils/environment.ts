@@ -15,12 +15,8 @@ export function getOrgNameFromUrl(url?: string): string {
   if (devMatch) {
     return devMatch[1];
   }
-  // Fallback only for Azure DevOps Server URLs
-  if (url.includes('azure')) {
-    const fallbackMatch = url.match(/https?:\/\/[^/]+\/([^/]+)/);
-    return fallbackMatch ? fallbackMatch[1] : 'unknown-organization';
-  }
-  return 'SSS Projects';
+  const fallbackMatch = url.match(/https?:\/\/[^/]+\/([^/]+)/);
+  return fallbackMatch ? fallbackMatch[1].replace('%20', ' ') : 'unknown-organization';
 }
 
 /**

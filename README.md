@@ -2,6 +2,10 @@
 
 A Model Context Protocol (MCP) server implementation for Azure DevOps, allowing AI assistants to interact with Azure DevOps APIs through a standardized protocol.
 
+## Upstream
+
+This project was forked from [Tiberriver256/mcp-server-azure-devops](https://github.com/Tiberriver256/mcp-server-azure-devops) to add support for working with Time Logs and other fixes for our esoteric environment. 
+
 ## Overview
 
 This server implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) for Azure DevOps, enabling AI assistants like Claude to interact with Azure DevOps resources securely. The server acts as a bridge between AI models and Azure DevOps APIs, providing a standardized way to:
@@ -47,29 +51,39 @@ The server uses a feature-based architecture where each feature area (like work-
 
 ### Running with NPX
 
-### Usage with Claude Desktop/Cursor AI
+### Usage with VS Code Copilot
 
-To integrate with Claude Desktop or Cursor AI, add one of the following configurations to your configuration file.
+To integrate with VS Code Copilot, add the following configurations to your configuration file at C:\Users\username\AppData\Roaming\Code\User\settings.json.
 
-#### Azure Identity Authentication
-
-Be sure you are logged in to Azure CLI with `az login` then add the following:
+#### Personal Access Token (PAT) Authentication
 
 ```json
 {
-  "mcpServers": {
-    "azureDevOps": {
-      "command": "npx",
-      "args": ["-y", "@tiberriver256/mcp-server-azure-devops"],
-      "env": {
-        "AZURE_DEVOPS_ORG_URL": "https://dev.azure.com/your-organization",
-        "AZURE_DEVOPS_AUTH_METHOD": "azure-identity",
-        "AZURE_DEVOPS_DEFAULT_PROJECT": "your-project-name"
+  "mcp": {
+    "inputs": [],
+    "servers": {
+      "azureDevOps": {
+        "command": "npx",
+        "args": ["-y", "@nisegami/mcp-server-azure-devops"],
+        "env": {
+          "AZURE_DEVOPS_USERNAME": "your-username",
+          "AZURE_DEVOPS_ORG_URL": "https://dev.azure.com/your-organization",
+          "AZURE_DEVOPS_AUTH_METHOD": "pat",
+          "AZURE_DEVOPS_PAT": "<YOUR_PAT>",
+          "AZURE_DEVOPS_DEFAULT_PROJECT": "your-project-name",
+          "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+        }
       }
     }
   }
 }
 ```
+
+For detailed configuration instructions and more authentication options, see the [Authentication Guide](docs/authentication.md).
+
+### Usage with Claude Desktop/Cursor AI
+
+To integrate with Claude Desktop or Cursor AI, add the following configurations to your configuration file.
 
 #### Personal Access Token (PAT) Authentication
 
@@ -78,12 +92,14 @@ Be sure you are logged in to Azure CLI with `az login` then add the following:
   "mcpServers": {
     "azureDevOps": {
       "command": "npx",
-      "args": ["-y", "@tiberriver256/mcp-server-azure-devops"],
+      "args": ["-y", "@nisegami/mcp-server-azure-devops"],
       "env": {
+        "AZURE_DEVOPS_USERNAME": "your-username",
         "AZURE_DEVOPS_ORG_URL": "https://dev.azure.com/your-organization",
         "AZURE_DEVOPS_AUTH_METHOD": "pat",
         "AZURE_DEVOPS_PAT": "<YOUR_PAT>",
-        "AZURE_DEVOPS_DEFAULT_PROJECT": "your-project-name"
+        "AZURE_DEVOPS_DEFAULT_PROJECT": "your-project-name",
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0"
       }
     }
   }
@@ -99,28 +115,8 @@ This server supports multiple authentication methods for connecting to Azure Dev
 ### Supported Authentication Methods
 
 1. **Personal Access Token (PAT)** - Simple token-based authentication
-2. **Azure Identity (DefaultAzureCredential)** - Flexible authentication using the Azure Identity SDK
-3. **Azure CLI** - Authentication using your Azure CLI login
 
 Example configuration files for each authentication method are available in the [examples directory](docs/examples/).
-
-## Environment Variables
-
-For a complete list of environment variables and their descriptions, see the [Authentication Guide](docs/authentication.md#configuration-reference).
-
-Key environment variables include:
-
-| Variable                       | Description                                                                        | Required                     | Default          |
-| ------------------------------ | ---------------------------------------------------------------------------------- | ---------------------------- | ---------------- |
-| `AZURE_DEVOPS_AUTH_METHOD`     | Authentication method (`pat`, `azure-identity`, or `azure-cli`) - case-insensitive | No                           | `azure-identity` |
-| `AZURE_DEVOPS_ORG_URL`         | Full URL to your Azure DevOps organization                                         | Yes                          | -                |
-| `AZURE_DEVOPS_PAT`             | Personal Access Token (for PAT auth)                                               | Only with PAT auth           | -                |
-| `AZURE_DEVOPS_DEFAULT_PROJECT` | Default project if none specified                                                  | No                           | -                |
-| `AZURE_DEVOPS_API_VERSION`     | API version to use                                                                 | No                           | Latest           |
-| `AZURE_TENANT_ID`              | Azure AD tenant ID (for service principals)                                        | Only with service principals | -                |
-| `AZURE_CLIENT_ID`              | Azure AD application ID (for service principals)                                   | Only with service principals | -                |
-| `AZURE_CLIENT_SECRET`          | Azure AD client secret (for service principals)                                    | Only with service principals | -                |
-| `LOG_LEVEL`                    | Logging level (debug, info, warn, error)                                           | No                           | info             |
 
 ## Troubleshooting Authentication
 
@@ -187,6 +183,11 @@ The Azure DevOps MCP server provides a variety of tools for interacting with Azu
 - `get_wikis`: List all wikis in a project
 - `get_wiki_page`: Get content of a specific wiki page as plain text
 
+### Time Log Tools
+
+- `create_time_log`: Create a new time log entry for a work item
+- `read_time_logs`: Read time log entries with optional filtering
+
 ### Pull Request Tools
 
 - [`create_pull_request`](docs/tools/pull-requests.md#create_pull_request) - Create a new pull request
@@ -203,7 +204,7 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for con
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=tiberriver256/mcp-server-azure-devops&type=Date)](https://www.star-history.com/#tiberriver256/mcp-server-azure-devops&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=nisegami/mcp-server-azure-devops&type=Date)](https://www.star-history.com/#nisegami/mcp-server-azure-devops&Date)
 
 ## License
 

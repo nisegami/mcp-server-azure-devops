@@ -52,6 +52,7 @@ dotenv.config();
 function getConfig(): AzureDevOpsConfig {
   // Debug log the environment variables to help diagnose issues
   process.stderr.write(`DEBUG - Environment variables in getConfig():
+  AZURE_DEVOPS_USERNAME: ${process.env.AZURE_DEVOPS_USERNAME || 'NOT SET'}
   AZURE_DEVOPS_ORG_URL: ${process.env.AZURE_DEVOPS_ORG_URL || 'NOT SET'}
   AZURE_DEVOPS_AUTH_METHOD: ${process.env.AZURE_DEVOPS_AUTH_METHOD || 'NOT SET'}
   AZURE_DEVOPS_PAT: ${process.env.AZURE_DEVOPS_PAT ? 'SET (hidden)' : 'NOT SET'}
