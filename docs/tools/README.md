@@ -11,6 +11,7 @@ This directory contains documentation for all tools available in the Azure DevOp
   - [Pull Requests](./pull-requests.md) - Tools for working with pull requests
   - [Work Items](./work-items.md) - Tools for working with work items
   - [Pipelines](./pipelines.md) - Tools for working with pipelines
+  - [Time Logs](./time-logs.md) - Tools for working with time logs
 - [Resource URIs](./resources.md) - Documentation for accessing repository content via resource URIs
 
 ## Tools by Category
@@ -49,6 +50,11 @@ This directory contains documentation for all tools available in the Azure DevOp
 
 - [`list_pipelines`](./pipelines.md#list_pipelines) - List all pipelines in a project
 - [`get_pipeline`](./pipelines.md#get_pipeline) - Get details of a specific pipeline
+
+### Time Log Tools
+
+- [`create_time_log`](./time-logs.md#create_time_log) - Create a new time log entry for a work item
+- [`read_time_logs`](./time-logs.md#read_time_logs) - Read time log entries with optional filtering
 
 ## Tool Structure
 

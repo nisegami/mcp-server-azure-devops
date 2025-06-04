@@ -22,6 +22,9 @@ describe('Azure DevOps MCP Server E2E Tests', () => {
       `AZURE_DEVOPS_ORG_URL: ${process.env.AZURE_DEVOPS_ORG_URL || 'NOT SET'}`,
     );
     console.error(
+      `AZURE_DEVOPS_USERNAME: ${process.env.AZURE_DEVOPS_USERNAME || 'NOT SET'}`,
+    );
+    console.error(
       `AZURE_DEVOPS_PAT: ${process.env.AZURE_DEVOPS_PAT ? 'SET (hidden value)' : 'NOT SET'}`,
     );
     console.error(

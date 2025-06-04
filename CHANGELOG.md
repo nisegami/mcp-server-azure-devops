@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.40](https://github.com/Tiberriver256/mcp-server-azure-devops/compare/mcp-server-azure-devops-v0.1.39...mcp-server-azure-devops-v0.1.40) (2025-06-04)
+
+
+### Features
+
+* add time logs functionality with create_time_log and read_time_logs tools
+* add comprehensive documentation for time logs tools
+
 ## [0.1.39](https://github.com/Tiberriver256/mcp-server-azure-devops/compare/mcp-server-azure-devops-v0.1.38...mcp-server-azure-devops-v0.1.39) (2025-06-03)
 
 

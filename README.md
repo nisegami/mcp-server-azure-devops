@@ -2,6 +2,10 @@
 
 A Model Context Protocol (MCP) server implementation for Azure DevOps, allowing AI assistants to interact with Azure DevOps APIs through a standardized protocol.
 
+## Upstream
+
+This project was forked from [Tiberriver256/mcp-server-azure-devops](https://github.com/Tiberriver256/mcp-server-azure-devops) to add support for working with Time Logs and other fixes for our esoteric environment. 
+
 ## Overview
 
 This server implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) for Azure DevOps, enabling AI assistants like Claude to interact with Azure DevOps resources securely. The server acts as a bridge between AI models and Azure DevOps APIs, providing a standardized way to:
@@ -51,26 +55,6 @@ The server uses a feature-based architecture where each feature area (like work-
 
 To integrate with Claude Desktop or Cursor AI, add one of the following configurations to your configuration file.
 
-#### Azure Identity Authentication
-
-Be sure you are logged in to Azure CLI with `az login` then add the following:
-
-```json
-{
-  "mcpServers": {
-    "azureDevOps": {
-      "command": "npx",
-      "args": ["-y", "@tiberriver256/mcp-server-azure-devops"],
-      "env": {
-        "AZURE_DEVOPS_ORG_URL": "https://dev.azure.com/your-organization",
-        "AZURE_DEVOPS_AUTH_METHOD": "azure-identity",
-        "AZURE_DEVOPS_DEFAULT_PROJECT": "your-project-name"
-      }
-    }
-  }
-}
-```
-
 #### Personal Access Token (PAT) Authentication
 
 ```json
@@ -78,12 +62,14 @@ Be sure you are logged in to Azure CLI with `az login` then add the following:
   "mcpServers": {
     "azureDevOps": {
       "command": "npx",
-      "args": ["-y", "@tiberriver256/mcp-server-azure-devops"],
+      "args": ["-y", "@nisegami/mcp-server-azure-devops"],
       "env": {
+        "AZURE_DEVOPS_USERNAME": "your-username",
         "AZURE_DEVOPS_ORG_URL": "https://dev.azure.com/your-organization",
         "AZURE_DEVOPS_AUTH_METHOD": "pat",
         "AZURE_DEVOPS_PAT": "<YOUR_PAT>",
-        "AZURE_DEVOPS_DEFAULT_PROJECT": "your-project-name"
+        "AZURE_DEVOPS_DEFAULT_PROJECT": "your-project-name",
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0"
       }
     }
   }
@@ -203,7 +189,7 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for con
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=tiberriver256/mcp-server-azure-devops&type=Date)](https://www.star-history.com/#tiberriver256/mcp-server-azure-devops&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=nisegami/mcp-server-azure-devops&type=Date)](https://www.star-history.com/#nisegami/mcp-server-azure-devops&Date)
 
 ## License
 
