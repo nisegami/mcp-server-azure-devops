@@ -44,34 +44,10 @@ import {
 } from './features/organizations';
 
 import {
-  searchTools,
-  isSearchRequest,
-  handleSearchRequest,
-} from './features/search';
-
-import {
   usersTools,
   isUsersRequest,
   handleUsersRequest,
 } from './features/users';
-
-import {
-  pullRequestsTools,
-  isPullRequestsRequest,
-  handlePullRequestsRequest,
-} from './features/pull-requests';
-
-import {
-  pipelinesTools,
-  isPipelinesRequest,
-  handlePipelinesRequest,
-} from './features/pipelines';
-
-import {
-  wikisTools,
-  isWikisRequest,
-  handleWikisRequest,
-} from './features/wikis';
 
 import {
   timeLogsTools,
@@ -122,10 +98,6 @@ export function createAzureDevOpsServer(config: AzureDevOpsConfig): Server {
       ...projectsTools,
       ...repositoriesTools,
       ...workItemsTools,
-      ...searchTools,
-      ...pullRequestsTools,
-      ...pipelinesTools,
-      ...wikisTools,
       ...timeLogsTools,
     ];
     return { tools };
@@ -317,24 +289,8 @@ export function createAzureDevOpsServer(config: AzureDevOpsConfig): Server {
         return await handleOrganizationsRequest(connection, request);
       }
 
-      if (isSearchRequest(request)) {
-        return await handleSearchRequest(connection, request);
-      }
-
       if (isUsersRequest(request)) {
         return await handleUsersRequest(connection, request);
-      }
-
-      if (isPullRequestsRequest(request)) {
-        return await handlePullRequestsRequest(connection, request);
-      }
-
-      if (isPipelinesRequest(request)) {
-        return await handlePipelinesRequest(connection, request);
-      }
-
-      if (isWikisRequest(request)) {
-        return await handleWikisRequest(connection, request);
       }
 
       if (isTimeLogsRequest(request)) {

@@ -19,10 +19,10 @@ export const GetWorkItemSchema = z.object({
  * Schema for listing work items
  */
 export const ListWorkItemsSchema = z.object({
-  projectId: z
+  projectName: z
     .string()
     .optional()
-    .describe(`The ID or name of the project (Default: ${defaultProject})`),
+    .describe(`The name of the project (Default: ${defaultProject})`),
   organizationId: z
     .string()
     .optional()
@@ -38,10 +38,10 @@ export const ListWorkItemsSchema = z.object({
  * Schema for creating a work item
  */
 export const CreateWorkItemSchema = z.object({
-  projectId: z
+  projectName: z
     .string()
     .optional()
-    .describe(`The ID or name of the project (Default: ${defaultProject})`),
+    .describe(`The name of the project (Default: ${defaultProject})`),
   organizationId: z
     .string()
     .optional()
@@ -123,10 +123,10 @@ export const UpdateWorkItemSchema = z.object({
 export const ManageWorkItemLinkSchema = z.object({
   sourceWorkItemId: z.number().describe('The ID of the source work item'),
   targetWorkItemId: z.number().describe('The ID of the target work item'),
-  projectId: z
+  projectName: z
     .string()
     .optional()
-    .describe(`The ID or name of the project (Default: ${defaultProject})`),
+    .describe(`The name of the project (Default: ${defaultProject})`),
   organizationId: z
     .string()
     .optional()

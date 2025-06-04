@@ -59,7 +59,7 @@ describe('listWorkItems integration', () => {
     }
 
     const options: ListWorkItemsOptions = {
-      projectId: projectName,
+      projectName: projectName,
     };
 
     // Act - make an actual API call to Azure DevOps
@@ -90,14 +90,14 @@ describe('listWorkItems integration', () => {
 
     // First get all items to know the total count
     const allOptions: ListWorkItemsOptions = {
-      projectId: projectName,
+      projectName: projectName,
     };
 
     const allItems = await listWorkItems(connection, allOptions);
 
     // Then get with pagination
     const paginationOptions: ListWorkItemsOptions = {
-      projectId: projectName,
+      projectName: projectName,
       top: 2, // Only get first 2 items
     };
 
@@ -129,7 +129,7 @@ describe('listWorkItems integration', () => {
     const wiql = `SELECT [System.Id], [System.Title] FROM WorkItems WHERE [System.TeamProject] = '${projectName}' AND [System.Id] IN (${workItemIdList}) AND [System.Tags] CONTAINS 'ListTest' ORDER BY [System.Id]`;
 
     const options: ListWorkItemsOptions = {
-      projectId: projectName,
+      projectName: projectName,
       wiql,
     };
 

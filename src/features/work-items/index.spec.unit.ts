@@ -76,14 +76,14 @@ describe('Work Items Request Handlers', () => {
       jest
         .spyOn(workItemModule.ListWorkItemsSchema, 'parse')
         .mockImplementation(() => {
-          return { projectId: 'myProject' };
+          return { projectName: 'myProject' };
         });
 
       jest
         .spyOn(workItemModule.CreateWorkItemSchema, 'parse')
         .mockImplementation(() => {
           return {
-            projectId: 'myProject',
+            projectName: 'myProject',
             workItemType: 'Task',
             title: 'New Task',
           };

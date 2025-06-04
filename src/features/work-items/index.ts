@@ -76,7 +76,7 @@ export const handleWorkItemsRequest: RequestHandler = async (
     case 'list_work_items': {
       const args = ListWorkItemsSchema.parse(request.params.arguments);
       const result = await listWorkItems(connection, {
-        projectId: args.projectId ?? defaultProject,
+        projectName: args.projectName ?? defaultProject,
         teamId: args.teamId,
         queryId: args.queryId,
         wiql: args.wiql,
@@ -91,7 +91,7 @@ export const handleWorkItemsRequest: RequestHandler = async (
       const args = CreateWorkItemSchema.parse(request.params.arguments);
       const result = await createWorkItem(
         connection,
-        args.projectId ?? defaultProject,
+        args.projectName ?? defaultProject,
         args.workItemType,
         {
           title: args.title,
@@ -128,7 +128,7 @@ export const handleWorkItemsRequest: RequestHandler = async (
       const args = ManageWorkItemLinkSchema.parse(request.params.arguments);
       const result = await manageWorkItemLink(
         connection,
-        args.projectId ?? defaultProject,
+        args.projectName ?? defaultProject,
         {
           sourceWorkItemId: args.sourceWorkItemId,
           targetWorkItemId: args.targetWorkItemId,

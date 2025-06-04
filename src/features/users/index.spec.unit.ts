@@ -51,7 +51,7 @@ describe('Users Request Handlers', () => {
       expect(JSON.parse(response.content[0].text as string)).toEqual(
         mockUserProfile,
       );
-      expect(getMe).toHaveBeenCalledWith(mockConnection);
+      expect(getMe).toHaveBeenCalledWith();
     });
 
     it('should throw error for unknown tool', async () => {

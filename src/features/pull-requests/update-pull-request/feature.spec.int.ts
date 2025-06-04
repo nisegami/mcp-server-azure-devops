@@ -40,7 +40,7 @@ describe('updatePullRequest integration', () => {
       throw new Error('Connection is null');
     }
     const workItems = await listWorkItems(connection, {
-      projectId: projectName,
+      projectName: projectName,
       top: 1, // Just need one work item
     });
 

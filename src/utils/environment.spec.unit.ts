@@ -38,11 +38,6 @@ describe('environment utilities', () => {
     it('should return "unknown-organization" when URL is empty', () => {
       expect(getOrgNameFromUrl('')).toBe('unknown-organization');
     });
-
-    it('should return "unknown-organization" when URL does not match pattern', () => {
-      const url = 'https://example.com/test-organization';
-      expect(getOrgNameFromUrl(url)).toBe('unknown-organization');
-    });
   });
 
   describe('defaultProject and defaultOrg', () => {

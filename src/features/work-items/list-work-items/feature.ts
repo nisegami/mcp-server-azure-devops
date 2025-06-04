@@ -14,13 +14,66 @@ import { ListWorkItemsOptions, WorkItem as WorkItemType } from '../types';
 /**
  * Constructs the default WIQL query for listing work items
  */
-function constructDefaultWiql(projectId: string, teamId?: string): string {
-  let query = `SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = '${projectId}'`;
+function constructDefaultWiql(projectName: string, teamId?: string): string {
+  let query = `SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = '${projectName}'`;
   if (teamId) {
     query += ` AND [System.TeamId] = '${teamId}'`;
   }
   query += ' ORDER BY [System.Id]';
   return query;
+}
+
+/**
+ * Modifies a WIQL query to ensure it's scoped to the specified project
+ */
+function ensureProjectScope(wiql: string, projectName: string): string {
+  // Check if the query already contains a project constraint
+  const hasProjectConstraint = /\[System\.TeamProject\]\s*=/.test(wiql);
+
+  if (hasProjectConstraint) {
+    // Query already has project constraint, return as-is
+    return wiql;
+  }
+
+  // First, extract and remove ORDER BY and GROUP BY clauses to avoid parsing conflicts
+  let workingQuery = wiql;
+  let extractedClauses = '';
+
+  // Extract ORDER BY clause (must come after GROUP BY if both exist)
+  const orderByMatch = workingQuery.match(/\s+ORDER\s+BY\s+.+$/i);
+  if (orderByMatch) {
+    extractedClauses = orderByMatch[0] + extractedClauses;
+    workingQuery = workingQuery.substring(0, orderByMatch.index!);
+  }
+
+  // Extract GROUP BY clause
+  const groupByMatch = workingQuery.match(/\s+GROUP\s+BY\s+[^ORDER]+/i);
+  if (groupByMatch) {
+    extractedClauses = groupByMatch[0] + extractedClauses;
+    workingQuery = workingQuery.substring(0, groupByMatch.index!);
+  }
+
+  // Now process the WHERE clause on the cleaned query
+  const whereMatch = workingQuery.match(/\bWHERE\b/i);
+
+  let result: string;
+  if (whereMatch) {
+    // Add project constraint to existing WHERE clause
+    const whereIndex = whereMatch.index! + whereMatch[0].length;
+    const beforeWhere = workingQuery.substring(0, whereIndex);
+    const afterWhere = workingQuery.substring(whereIndex);
+    result = `${beforeWhere} [System.TeamProject] = '${projectName}' AND (${afterWhere.trim()})`;
+  } else {
+    // Add WHERE clause with project constraint
+    const trimmedQuery = workingQuery.trim();
+    result = `${trimmedQuery} WHERE [System.TeamProject] = '${projectName}'`;
+  }
+
+  // Append the extracted clauses back
+  result += extractedClauses;
+
+  process.stderr.write(`Modified WIQL to ensure project scope: ${result}`);
+  return result;
 }
 
 /**
@@ -36,21 +89,29 @@ export async function listWorkItems(
 ): Promise<WorkItemType[]> {
   try {
     const witApi = await connection.getWorkItemTrackingApi();
-    const { projectId, teamId, queryId, wiql } = options;
+    const { projectName, teamId, queryId, wiql } = options;
 
     let workItemRefs: WorkItemReference[] = [];
 
     if (queryId) {
       const teamContext: TeamContext = {
-        project: projectId,
+        project: projectName,
         team: teamId,
       };
       const queryResult = await witApi.queryById(queryId, teamContext);
       workItemRefs = queryResult.workItems || [];
     } else {
-      const query = wiql || constructDefaultWiql(projectId, teamId);
+      let query: string;
+      if (wiql) {
+        // Ensure the provided WIQL query is scoped to the specified project
+        query = ensureProjectScope(wiql, projectName);
+      } else {
+        // Use the default query
+        query = constructDefaultWiql(projectName, teamId);
+      }
+
       const teamContext: TeamContext = {
-        project: projectId,
+        project: projectName,
         team: teamId,
       };
       const queryResult = await witApi.queryByWiql({ query }, teamContext);

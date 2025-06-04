@@ -7,7 +7,7 @@ import {
  * Options for listing work items
  */
 export interface ListWorkItemsOptions {
-  projectId: string;
+  projectName: string;
   teamId?: string;
   queryId?: string;
   wiql?: string;

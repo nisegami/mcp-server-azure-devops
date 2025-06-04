@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.1.42](https://github.com/nisegami/mcp-server-azure-devops/compare/mcp-server-azure-devops-v0.1.39...mcp-server-azure-devops-v0.1.41) (2025-06-04)
+## 0.1.45 (2025-06-04)
+
+### Bug Fixes
+
+* fixed list-work-items tool
+* removed tool categories that don't apply to our environment
+
+## 0.1.42 (2025-06-04)
 
 ### Features
 

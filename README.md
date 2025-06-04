@@ -64,7 +64,7 @@ To integrate with VS Code Copilot, add the following configurations to your conf
     "servers": {
       "azureDevOps": {
         "command": "npx",
-        "args": ["-y", "@nisegami/mcp-server-azure-devops"],
+        "args": ["-y", "@nisegami/mcp-server-azure-devops@latest"],
         "env": {
           "AZURE_DEVOPS_USERNAME": "your-username",
           "AZURE_DEVOPS_ORG_URL": "https://dev.azure.com/your-organization",
@@ -165,12 +165,6 @@ The Azure DevOps MCP server provides a variety of tools for interacting with Azu
 - `update_work_item`: Update an existing work item
 - `list_work_items`: List work items in a project
 - `manage_work_item_link`: Add, remove, or update links between work items
-
-### Search Tools
-
-- `search_code`: Search for code across repositories in a project
-- `search_wiki`: Search for content across wiki pages in a project
-- `search_work_items`: Search for work items across projects in Azure DevOps
 
 ### Pipelines Tools
 
