@@ -29,7 +29,7 @@ export const ListWorkItemsSchema = z.object({
     .describe(`The ID or name of the organization (Default: ${defaultOrg})`),
   teamId: z.string().optional().describe('The ID of the team'),
   queryId: z.string().optional().describe('ID of a saved work item query'),
-  wiql: z.string().optional().describe('Work Item Query Language (WIQL) query'),
+  wiql: z.string().optional().describe('Work Item Query Language (WIQL) query. Only select System.Id. Use displayName to filter by System.AssignedTo.'),
   top: z.number().optional().describe('Maximum number of work items to return'),
   skip: z.number().optional().describe('Number of work items to skip'),
 });

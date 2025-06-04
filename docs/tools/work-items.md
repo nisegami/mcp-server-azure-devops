@@ -129,14 +129,14 @@ Lists work items in a specified project.
 
 ### Parameters
 
-| Parameter   | Type   | Required | Description                                           |
-| ----------- | ------ | -------- | ----------------------------------------------------- |
-| `projectId` | string | Yes      | The ID or name of the project to list work items from |
-| `teamId`    | string | No       | The ID of the team to list work items for             |
-| `queryId`   | string | No       | ID of a saved work item query                         |
-| `wiql`      | string | No       | Work Item Query Language (WIQL) query                 |
-| `top`       | number | No       | Maximum number of work items to return                |
-| `skip`      | number | No       | Number of work items to skip                          |
+| Parameter   | Type   | Required | Description                                                                                                    |
+| ----------- | ------ | -------- | -------------------------------------------------------------------------------------------------------------- |
+| `projectId` | string | Yes      | The ID or name of the project to list work items from                                                          |
+| `teamId`    | string | No       | The ID of the team to list work items for                                                                      |
+| `queryId`   | string | No       | ID of a saved work item query                                                                                  |
+| `wiql`      | string | No       | Work Item Query Language (WIQL) query. Only select System.Id. Use displayName to filter by System.AssignedTo.  |
+| `top`       | number | No       | Maximum number of work items to return                                                                         |
+| `skip`      | number | No       | Number of work items to skip                                                                                   |
 
 ### Response
 

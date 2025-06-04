@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.1.46 (2025-06-04)
+
+### Bug Fixes
+
+* added hints for clients when filtering using wiql using the list-work-items tool
+
 ## 0.1.45 (2025-06-04)
 
 ### Bug Fixes
