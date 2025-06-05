@@ -60,4 +60,73 @@ describe('createWorkItem unit', () => {
       }),
     ).rejects.toThrow('Failed to create work item: Unexpected error');
   });
+
+  // Test for originalEstimate field handling
+  test('should include originalEstimate field when provided', async () => {
+    // Arrange
+    const mockCreateWorkItem = jest.fn().mockResolvedValue({
+      id: 123,
+      fields: {
+        'System.Title': 'Test Task',
+        'Microsoft.VSTS.Scheduling.OriginalEstimate': 8,
+      },
+    });
+
+    const mockConnection: any = {
+      getWorkItemTrackingApi: jest.fn().mockResolvedValue({
+        createWorkItem: mockCreateWorkItem,
+      }),
+      serverUrl: 'https://dev.azure.com/test',
+    };
+
+    // Act
+    await createWorkItem(mockConnection, 'TestProject', 'Task', {
+      title: 'Test Task',
+      originalEstimate: 8,
+    });
+
+    // Assert
+    expect(mockCreateWorkItem).toHaveBeenCalledWith(
+      null,
+      expect.arrayContaining([
+        {
+          op: 'add',
+          path: '/fields/Microsoft.VSTS.Scheduling.OriginalEstimate',
+          value: 8,
+        },
+      ]),
+      'TestProject',
+      'Task',
+    );
+  });
+
+  test('should not include originalEstimate field when not provided', async () => {
+    // Arrange
+    const mockCreateWorkItem = jest.fn().mockResolvedValue({
+      id: 123,
+      fields: {
+        'System.Title': 'Test Task',
+      },
+    });
+
+    const mockConnection: any = {
+      getWorkItemTrackingApi: jest.fn().mockResolvedValue({
+        createWorkItem: mockCreateWorkItem,
+      }),
+      serverUrl: 'https://dev.azure.com/test',
+    };
+
+    // Act
+    await createWorkItem(mockConnection, 'TestProject', 'Task', {
+      title: 'Test Task',
+    });
+
+    // Assert
+    const callArgs = mockCreateWorkItem.mock.calls[0][1];
+    const originalEstimateField = callArgs.find(
+      (field: any) =>
+        field.path === '/fields/Microsoft.VSTS.Scheduling.OriginalEstimate',
+    );
+    expect(originalEstimateField).toBeUndefined();
+  });
 });

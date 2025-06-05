@@ -26,6 +26,7 @@ export interface CreateWorkItemOptions {
   iterationPath?: string;
   priority?: number;
   parentId?: number;
+  originalEstimate?: number;
   additionalFields?: Record<string, string | number | boolean | null>;
 }
 

@@ -69,7 +69,7 @@ Creates a new work item in a specified project.
 | `workItemType`     | string | Yes      | The type of work item to create (e.g., "Task", "Bug", "User Story") |
 | `title`            | string | Yes      | The title of the work item                                          |
 | `description`      | string | No       | The description of the work item                                    |
-| `assignedTo`       | string | No       | The email or name of the user to assign the work item to            |
+| `assignedTo`       | string | No       | The display name of the user to assign the work item to            |
 | `areaPath`         | string | No       | The area path for the work item                                     |
 | `iterationPath`    | string | No       | The iteration path for the work item                                |
 | `priority`         | number | No       | The priority of the work item                                       |

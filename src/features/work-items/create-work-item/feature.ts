@@ -75,6 +75,15 @@ export async function createWorkItem(
       });
     }
 
+    // Add original estimate if provided
+    if (options.originalEstimate !== undefined) {
+      document.push({
+        op: 'add',
+        path: '/fields/Microsoft.VSTS.Scheduling.OriginalEstimate',
+        value: options.originalEstimate,
+      });
+    }
+
     // Add parent relationship if parentId is provided
     if (options.parentId) {
       document.push({

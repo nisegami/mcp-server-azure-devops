@@ -182,4 +182,55 @@ describe('createWorkItem integration', () => {
     );
     expect(parentRelation).toBeDefined();
   });
+
+  test('should create a Task work item with original estimate', async () => {
+    // Skip if no connection is available
+    if (shouldSkipIntegrationTest()) {
+      return;
+    }
+
+    // This connection must be available if we didn't skip
+    if (!connection) {
+      throw new Error(
+        'Connection should be available when test is not skipped',
+      );
+    }
+
+    // Create a unique title using timestamp to avoid conflicts
+    const uniqueTitle = `Task with Estimate ${new Date().toISOString()}`;
+
+    // For a true integration test, use a real project
+    const projectName =
+      process.env.AZURE_DEVOPS_DEFAULT_PROJECT || 'DefaultProject';
+    const workItemType = 'Task';
+
+    const options: CreateWorkItemOptions = {
+      title: uniqueTitle,
+      description: 'This is a test task with original estimate',
+      priority: 2,
+      originalEstimate: 8, // 8 hours
+    };
+
+    // Act - make an actual API call to Azure DevOps
+    const result = await createWorkItem(
+      connection,
+      projectName,
+      workItemType,
+      options,
+    );
+
+    // Assert on the actual response
+    expect(result).toBeDefined();
+    expect(result.id).toBeDefined();
+
+    // Verify fields match what we set
+    expect(result.fields).toBeDefined();
+    if (result.fields) {
+      expect(result.fields['System.Title']).toBe(uniqueTitle);
+      expect(result.fields['Microsoft.VSTS.Common.Priority']).toBe(2);
+      expect(result.fields['Microsoft.VSTS.Scheduling.OriginalEstimate']).toBe(
+        8,
+      );
+    }
+  });
 });

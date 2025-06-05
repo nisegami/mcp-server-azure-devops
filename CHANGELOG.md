@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.1.47 (2025-06-05)
+
+### Bug Fixes
+
+* improved create-work-item tool to expose originalEstimate field directly
+
 ## 0.1.46 (2025-06-04)
 
 ### Bug Fixes
