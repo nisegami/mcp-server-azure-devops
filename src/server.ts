@@ -38,12 +38,6 @@ import {
 } from './features/repositories';
 
 import {
-  organizationsTools,
-  isOrganizationsRequest,
-  handleOrganizationsRequest,
-} from './features/organizations';
-
-import {
   usersTools,
   isUsersRequest,
   handleUsersRequest,
@@ -94,7 +88,6 @@ export function createAzureDevOpsServer(config: AzureDevOpsConfig): Server {
     // Combine tools from all features
     const tools = [
       ...usersTools,
-      ...organizationsTools,
       ...projectsTools,
       ...repositoriesTools,
       ...workItemsTools,
@@ -282,11 +275,6 @@ export function createAzureDevOpsServer(config: AzureDevOpsConfig): Server {
 
       if (isRepositoriesRequest(request)) {
         return await handleRepositoriesRequest(connection, request);
-      }
-
-      if (isOrganizationsRequest(request)) {
-        // Organizations feature doesn't need the config object anymore
-        return await handleOrganizationsRequest(connection, request);
       }
 
       if (isUsersRequest(request)) {
